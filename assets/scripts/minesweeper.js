@@ -1,4 +1,9 @@
 (function () {
+  /**
+   * name: startGame
+   * desc: initializes the grid and places bombs
+   * @param {String} difficulty: place bombs as per difficulty selected by user
+   */
   function startGame(difficulty) {
     if (!grid.isGameOver()) {
       return;
@@ -11,10 +16,19 @@
     grid.setGameDifficulty(difficulty);
     grid.placeBombs();
   }
-
+  /**
+   * name: resetGame
+   * desc: Resets the grid
+   */
   function resetGame() {
     grid.resetGame();
   }
+  /**
+   * name: createDOMElement
+   * desc: creates a DOM element as per user input and returns it
+   * @param {String} type: HTML tag name 
+   * @param {Object} config: Object containing attribute key-value pairs to be applied to the DOM
+   */
   const createDOMElement = (type, config) => {
     const elem = document.createElement(type);
     const { className, dataValue, src } = config;
@@ -27,6 +41,11 @@
     });
     return elem;
   }
+  /**
+   * name: handleGridClick
+   * desc: Captures clicks made on the grid
+   * @param {Object} e: event
+   */
   function handleGridClick(e) {
     const element = event.target;
     if (grid.isGameOver()) {
@@ -38,24 +57,29 @@
     }
     grid.processCell(key);
   }
+  /**
+   * Grid class contains all the properties of the grid and methods to change those properties
+   * Keeps a track of the size, the data inside the grid and the bombCount
+   */
   class Grid {
     constructor(size) {
       this.size = size;
     }
     #gridData = {};
     #gameOver = true;
-    #bombCount = 20;
+    #bombCount = 10;
+    // Clears the grid data and removes the numbers input so far. Also places bombs randomly
     resetGame() {
       this.clearGrid();
       this.placeBombs();
       this.#gameOver = false;
     }
-
+    // Removes the GridCells from the DOM
     removeGrid(elem) {
       elem.innerHTML = "";
       this.#gridData = {};
     }
-
+    // Removes additional classes that might have been applied to grid cells
     clearGrid() {
       document.querySelectorAll('.gridCell').forEach(cell => {
         cell.innerHTML = "";
@@ -63,7 +87,7 @@
         this.#gridData = {};
       })
     }
-
+    // Places bombs on the grid randomly based on the bombCount variable
     placeBombs() {
       while (Object.keys(this.#gridData).length < this.#bombCount) {
         const randomX = Math.floor(Math.random() * 10);
@@ -73,9 +97,11 @@
         }
       }
     }
+    // Returns the grid data
     getGridData() {
       return this.#gridData;
     }
+    // Creates the grid cells on the DOM
     generateGrid(size, targetElement) {
       this.#gameOver = false;
       for (let i = 0; i < size; i++) {
@@ -105,6 +131,10 @@
         targetElement.appendChild(row);
       }
     }
+    // Handles the logic when a cell is clicked
+    // If the cell is a bomb: GAME OVER
+    // If the cell is clear, calculate the number of bombs in the adjoining cells and print the value on the cell
+    // If the cell is clear and has no adjoining neighbours with bombs, reveal the surrounding cells that have neighbours with bombs
     processCell(key) {
       if (this.#gridData[key] === 'BOMB') {
         this.#gameOver = true;
@@ -114,6 +144,7 @@
         this.checkNeighbours(key);
       }
     }
+    // Used to reveal bombs on the grid
     revealBombs() {
       Object.keys(this.#gridData).forEach(key => {
         if (this.#gridData[key] === 'BOMB') {
@@ -127,6 +158,7 @@
         }
       })
     }
+    // If the cell does not contain a bomb, this function is used to calculate the bombs in adjoining cells
     checkNeighbours(key) {
       let [row, col] = [key.split('-')[0], key.split('-')[1]];
       row = parseInt(row, 10);
@@ -188,7 +220,11 @@
         this.setGameOverMsg(true);
       }
     }
-
+    // Function for setting game difficulty
+    // EASY: 10% of grid is bombs
+    // MEDIUM: 15% of the grid is bombs
+    // HARD: 20% of the grid is bombs
+    // INSANE: 50% of the grid is bombs
     setGameDifficulty(input) {
       let factor = 10;
       if (input === 'EASY') {
@@ -203,7 +239,7 @@
 
       this.#bombCount = Math.ceil(Math.pow(this.size, 2) / factor);
     }
-
+    // Sets appropriate message when game is over
     setGameOverMsg(isWin) {
       document.querySelectorAll('.resetBtn')[0].style.display = 'none';
       document.querySelectorAll('.gameControls')[0].style.display = 'block';
@@ -218,10 +254,11 @@
         element.style.display = 'block';
       }
     }
+    // Returns if game is over or not
     isGameOver() {
       return this.#gameOver;
     }
-
+    // Checks if the last action meets the winning requirements
     isWinningMove() {
       const targetCount = (this.size * this.size) - this.#bombCount;
       let currentCount = 0;
@@ -233,7 +270,8 @@
       return !(currentCount < targetCount);
     }
   }
-
+  
+  // Code for initializing the game
   const grid = new Grid(10);
   const targetElement = document.getElementById('gridRoot');
   targetElement.addEventListener('click', handleGridClick);
