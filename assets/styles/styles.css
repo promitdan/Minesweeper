@@ -1,0 +1,72 @@
+:root {
+	--heading-font-size: 22px;
+	--sub-heading-font-size: 18px;
+	--title-font-size: 16px;
+	--regular-font-size: 14px;
+	font-family: sans-serif;
+}
+.gameHeader {
+	font-size: var(--heading-font-size);
+	font-weight: bold;
+	margin-bottom: 20px;
+}
+
+.gridRow {
+	display: flex;
+}
+.gridCell {
+	height: 50px;
+	width: 50px;
+	border: 1px solid #3c3d3c;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+}
+.topCell {
+	border-top: 2px solid #3c3d3c;
+}
+.bottomCell {
+	border-bottom: 2px solid #3c3d3c;
+}
+.leftCell {
+	border-left: 2px solid #3c3d3c;
+}
+.rightCell {
+	border-right: 2px solid #3c3d3c;
+}
+.mineImg {
+	width: 100%;
+}
+.discoveredCell {
+	background-color: #e4e4e4;
+}
+.resetBtn {
+	padding: 16px;
+	font-size: var(--);
+	background-color: #00b9f5;
+	color: #fff;
+	margin-top: 10px;
+	display: flex;
+	justify-content: center;
+	border-radius: 4px;
+	cursor: pointer;
+}
+.statsWrapper {
+	display: flex;
+	align-items: center;
+}
+.gameMsg {
+	margin-right: 10px;
+	margin-bottom: 20px;
+}
+.errorMsg {
+	font-size: var(--sub-heading-font-size);
+	color: #bd4b4b;
+	font-weight: bold;
+}
+.successMsg {
+	font-size: var(--sub-heading-font-size);
+	color: #26a547;
+	font-weight: bold;
+}
