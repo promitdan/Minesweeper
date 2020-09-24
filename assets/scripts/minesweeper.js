@@ -14,6 +14,7 @@
     document.querySelectorAll('.gameMsg')[0].style.display = 'none';
     grid.generateGrid(10, targetElement);
     grid.setGameDifficulty(difficulty);
+    grid.setPlayerLife(3);
     grid.placeBombs();
   }
   /**
@@ -22,6 +23,7 @@
    */
   function resetGame() {
     grid.resetGame();
+    grid.setPlayerLife(3)
   }
   /**
    * name: createDOMElement
@@ -68,6 +70,34 @@
     #gridData = {};
     #gameOver = true;
     #bombCount = 10;
+    #playerLife = 1;
+
+    setPlayerLife(value) {
+      this.#playerLife = value;
+      const lifeBar = document.querySelectorAll('.lifeBar')[0];
+      lifeBar.innerHTML = "";
+      console.log('HERE');
+      for (let i = 0; i < this.#playerLife; i++) {
+        const life = createDOMElement('img', {
+          src: './assets/images/life.png',
+          className: 'lifeImg'
+        });
+        lifeBar.appendChild(life);
+      }
+    }
+
+    decrementLife() {
+      this.#playerLife--;
+      const lifeBar = document.querySelectorAll('.lifeBar')[0];
+      lifeBar.innerHTML = "";
+      for (let i = 0; i < this.#playerLife; i++) {
+        const life = createDOMElement('img', {
+          src: './assets/images/life.png',
+          className: 'lifeImg'
+        });
+        lifeBar.appendChild(life);
+      }
+    }
     // Clears the grid data and removes the numbers input so far. Also places bombs randomly
     resetGame() {
       this.clearGrid();
@@ -137,9 +167,20 @@
     // If the cell is clear and has no adjoining neighbours with bombs, reveal the surrounding cells that have neighbours with bombs
     processCell(key) {
       if (this.#gridData[key] === 'BOMB') {
-        this.#gameOver = true;
-        this.setGameOverMsg(false);
-        this.revealBombs();
+        this.decrementLife();
+        if (this.#playerLife === 0) {
+          this.#gameOver = true;
+          this.setGameOverMsg(false);
+          this.revealBombs();
+        } else {
+          const element = document.querySelector(`[data-key="${key}"]`);
+          const image = createDOMElement('img', {
+            src: './assets/images/mine.png',
+            className: 'mineImg'
+          });
+          element.innerHTML = "";
+          element.appendChild(image);
+        }
       } else {
         this.checkNeighbours(key);
       }
@@ -154,6 +195,7 @@
             src: './assets/images/mine.png',
             className: 'mineImg'
           });
+          element.innerHTML = "";
           element.appendChild(image);
         }
       })
@@ -270,7 +312,7 @@
       return !(currentCount < targetCount);
     }
   }
-  
+
   // Code for initializing the game
   const grid = new Grid(10);
   const targetElement = document.getElementById('gridRoot');

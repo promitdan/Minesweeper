@@ -107,3 +107,12 @@
 	color: #26a547;
 	font-weight: bold;
 }
+
+.lifeBar {
+	display: flex;
+	margin-bottom: 20px;
+}
+.lifeImg {
+	margin-right: 10px;
+	width: 25px;
+}
