@@ -24,6 +24,9 @@ This menu contains the welcome message and the difficulty selector for the game.
 ## Reset Game: 
 You can reset the current game at any time you want to. The bombs will be reset at random locations, while retaining the difficulty setting of the last game.
 
+## Life Bar
+A player has 3 lives. So in each game, the player has 2 additional chances to land on a mine and not die. Once he is out of lives he will lose the game
+
 # Conclusion
 
 Building this was a fun exercise for me. Hope it will be a lot more fun for you to play.
