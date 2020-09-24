@@ -77,7 +77,6 @@
       return this.#gridData;
     }
     generateGrid(size, targetElement) {
-      console.log(targetElement);
       this.#gameOver = false;
       for (let i = 0; i < size; i++) {
         const row = createDOMElement('div', {
@@ -129,7 +128,6 @@
       })
     }
     checkNeighbours(key) {
-      console.log('Current box: ', key);
       let [row, col] = [key.split('-')[0], key.split('-')[1]];
       row = parseInt(row, 10);
       col = parseInt(col, 10);
