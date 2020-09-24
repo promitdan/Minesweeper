@@ -9,10 +9,20 @@
     <div class="gameHeader">
       Minesweeper!!
     </div>
-    <!-- Container for displaying messages on Game completion -->
+    <div class="gameControls">
+      <div class="startMsg">Choose Difficulty to Start the Game</div>
+      <div class="difficulty">
+        <div class="difficultyBtn easy" onclick="startGame('EASY')">EASY</div>
+        <div class="difficultyBtn medium" onclick="startGame('MEDIUM')">MEDIUM</div>
+        <div class="difficultyBtn hard" onclick="startGame('HARD')">HARD</div>
+        <div class="difficultyBtn insane" onclick="startGame('INSANE')">INSANE</div>
+      </div>
+    </div>
     <div class="gameMsg" id="gameMsg"></div>
-    <!-- Container for placing the game grid -->
     <div class="gridWrapper" id="gridRoot"></div>
+    <div class="statsWrapper">
+      <div class="resetBtn" style="display: none;" onclick="resetGame()">Reset Game</div>
+    </div>
   </body>
   <script src="./assets/scripts/minesweeper.js"></script>
 </html>

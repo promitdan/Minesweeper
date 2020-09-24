@@ -10,7 +10,44 @@
 	font-weight: bold;
 	margin-bottom: 20px;
 }
+.gameControls {
+	margin-bottom: 20px;
+}
+.startMsg {
+	font-size: var(--sub-heading-font-size);
+	font-weight: bold;
+	margin-bottom: 10px;
+}
+.difficulty {
+	display: flex;
+}
+.difficultyBtn {
+	border-radius: 4px;
+	font-weight: bold;
+	margin-right: 10px;
+	padding: 8px 16px;
+	cursor: pointer;
+}
+.difficultyBtn:hover {
+	box-shadow: 0px 0px 3px 0px blue;
+}
+.easy {
+	background-color: #9fd79f;
+}
+.medium {
+	background-color: #edca49;
+}
+.hard {
+	background-color: #c42424;
+	color: #fff;
+}
+.insane {
+	background-color: #cc9ea3;
+	color: #c50e0e;
+}
+.gridWrapper {
 
+}
 .gridRow {
 	display: flex;
 }
